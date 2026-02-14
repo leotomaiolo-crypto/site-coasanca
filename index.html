@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COASANCA – Clube de Observadores de Aves de São Carlos</title>
+    <meta name="description" content="Site oficial do Clube de Observadores de Aves de São Carlos. Observação, fotografia e conservação da natureza.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* 
+         * VARIÁVEIS DE CORES E CONFIGURAÇÕES GERAIS 
+         */
+        :root {
+            --cor-verde-escuro: #1E3D2F;
+            --cor-verde-claro: #6B8E23;
+            --cor-bege-claro: #F5F1E6;
+            --cor-laranja-sabia: #E67E22;
+            --cor-laranja-hover: #d35400;
+            --cor-texto: #333333;
+            --cor-branco: #FFFFFF;
+            --fonte-titulo: 'Montserrat', sans-serif;
+            --fonte-texto: 'Open Sans', sans-serif;
+            --espacamento-secao: 80px;
+            --transicao-suave: all 0.3s ease;
+        }
+
+        /* RESET CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--fonte-texto);
+            color: var(--cor-texto);
+            background-color: var(--cor-branco);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--fonte-titulo);
+            font-weight: 700;
+            color: var(--cor-verde-escuro);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* UTILITÁRIOS */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            font-family: var(--fonte-titulo);
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transicao-suave);
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--cor-laranja-sabia);
+            color: var(--cor-branco);
+            border: 2px solid var(--cor-laranja-sabia);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--cor-laranja-hover);
+            border-color: var(--cor-laranja-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--cor-branco);
+            border: 2px solid var(--cor-branco);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--cor-branco);
+            color: var(--cor-verde-escuro);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--cor-laranja-sabia);
+        }
+
+        /* ANIMAÇÃO DE SCROLL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 
+         * HEADER & NAVEGAÇÃO 
+         */
+        header {
+            background-color: var(--cor-verde-escuro);
+            color: var(--cor-branco);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--fonte-titulo);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cor-branco);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--cor-laranja-sabia);
+        }
+
+        /* Menu Hambúrguer (Mobile) */
+        .burger {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--cor-branco);
+            margin: 5px;
+            transition: var(--transicao-suave);
+        }
+
+        /* 
+         * HERO SECTION 
+         */
+        #hero {
+            height: 100vh;
+            /* Imagem de natureza/pássaros */
+            background-image: url('https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-top: 0;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(30, 61, 47, 0.9), rgba(30, 61, 47, 0.4));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: var(--cor-branco);
+            max-width: 800px;
+            padding-top: 60px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--cor-branco);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* 
+         * QUEM SOMOS 
+         */
+        #sobre {
+            padding: var(--espacamento-secao) 0;
+            background-color: var(--cor-branco);
+        }
+
+        .sobre-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .sobre-texto h2 {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: left;
+        }
+        
+        .sobre-texto h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--cor-laranja-sabia);
+            margin-top: 10px;
+        }
+
+        .sobre-texto p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            color: #555;
+        }
+
+        .sobre-img img {
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        /* 
+         * O QUE FAZEMOS (CARDS) 
+         */
+        #atividades {
+            padding: var(--espacamento-secao) 0;
+            background-color: #fafafa;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--cor-branco);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: var(--transicao-suave);
+            border-bottom: 4px solid var(--cor-verde-claro);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            color: var(--cor-verde-escuro);
+        }
+
+        /* 
+         * POR QUE PARTICIPAR 
+         */
+        #participar {
+            padding: var(--espacamento-secao) 0;
+            background-color: var(--cor-bege-claro);
+        }
+
+        .participar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lista-beneficios {
+            list-style: none;
+            margin: 2rem 0 3rem;
+            font-size: 1.2rem;
+            background: var(--cor-branco);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .lista-beneficios li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .lista-beneficios li:last-child {
+            margin-bottom: 0;
+        }
+
+        .lista-beneficios li::before {
+            content: '✔';
+            color: var(--cor-verde-claro);
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.4rem;
+        }
+
+        /* 
+         * CONTRIBUIÇÃO 
+         */
+        #contribuicao {
+            padding: var(--espacamento-secao) 0;
+        }
+
+        .box-contribuicao {
+            background: var(--cor-branco);
+            border: 2px solid var(--cor-verde-claro);
+            border-radius: 15px;
+            padding: 4rem 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .box-contribuicao::before {
+            content: '🌿';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            background: var(--cor-branco);
+            padding: 0 15px;
+            line-height: 1;
+        }
+
+        .preco {
+            font-size: 3.5rem;
+            color: var(--cor-laranja-sabia);
+            font-weight: 700;
+            margin: 1.5rem 0;
+            line-height: 1;
+        }
+
+        .preco span {
+            display: block;
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+            margin-top: 5px;
+        }
+
+        .box-contribuicao p {
+            margin-bottom: 1rem;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        /* 
+         * GALERIA 
+         */
+        #galeria {
+            padding: var(--espacamento-secao) 0;
+            background-color: #fafafa;
+        }
+
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .galeria-item {
+            overflow: hidden;
+            border-radius: 8px;
+            height: 250px;
+            position: relative;
+        }
+
+        .galeria-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .galeria-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* 
+         * CHAMADA FINAL (CTA) 
+         */
+        #cta-final {
+            background-color: var(--cor-verde-escuro);
+            padding: 6rem 0;
+            text-align: center;
+            color: var(--cor-branco);
+            position: relative;
+        }
+        
+        #cta-final::before {
+             content: '';
+             position: absolute;
+             top: 0; left: 0; width: 100%; height: 100%;
+             background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+             opacity: 0.05;
+        }
+
+        #cta-final .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        #cta-final h2 {
+            color: var(--cor-branco);
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        #cta-final p {
+            margin-bottom: 2.5rem;
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        /* 
+         * FOOTER 
+         */
+        footer {
+            background-color: #11241b;
+            color: #ccc;
+            padding: 5rem 0 2rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 4rem;
+        }
+
+        .footer-col h4 {
+            color: var(--cor-branco);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 30px;
+            height: 2px;
+            background-color: var(--cor-laranja-sabia);
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            transition: 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--cor-laranja-sabia);
+            padding-left: 5px;
+        }
+        
+        .footer-col p {
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        /* 
+         * RESPONSIVIDADE 
+         */
+        @media (max-width: 960px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --espacamento-secao: 60px;
+            }
+
+            .logo span {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                position: absolute;
+                right: 0px;
+                height: 100vh;
+                top: 0;
+                background-color: var(--cor-verde-escuro);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 70%;
+                transform: translateX(100%);
+                transition: transform 0.4s ease-in-out;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            }
+
+            .nav-links.nav-active {
+                transform: translateX(0%);
+            }
+            
+            .nav-links li {
+                opacity: 0; /* Para animação */
+            }
+
+            .burger {
+                display: block;
+            }
+            
+            /* Animação do Burger */
+            .toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
+            .toggle .line2 { opacity: 0; }
+            .toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
+
+            .hero-content {
+                text-align: center;
+                margin: 0 auto;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .sobre-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .sobre-img {
+                order: -1;
+            }
+            
+            .sobre-texto h2 {
+                text-align: center;
+            }
+            
+            .sobre-texto h2::after {
+                margin: 10px auto 0;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+            
+            .box-contribuicao {
+                padding: 2rem;
+            }
+            
+            .preco {
+                font-size: 2.8rem;
+            }
+        }
+        
+        /* Animação Keyframes para links do menu */
+        @keyframes navLinkFade {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <span>🐦</span> COASANCA
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#hero">Início</a></li>
+                    <li><a href="#sobre">Quem Somos</a></li>
+                    <li><a href="#atividades">Atividades</a></li>
+                    <li><a href="#participar">Participar</a></li>
+                    <li><a href="#contribuicao">Contribuição</a></li>
+                    <li><a href="#contato" class="btn btn-primary" style="padding: 8px 24px; width: auto; font-size: 0.9rem;">Contato</a></li>
+                </ul>
+                <div class="burger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="container hero-content reveal">
+            <h1>Clube de Observadores de Aves de São Carlos – COASANCA</h1>
+            <p>Observação de aves, educação ambiental e conservação da biodiversidade local.</p>
+            <div class="hero-buttons">
+                <a href="#participar" class="btn btn-primary">Quero participar do COASANCA</a>
+                <a href="#sobre" class="btn btn-outline">Conheça o clube</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUEM SOMOS -->
+    <section id="sobre">
+        <div class="container">
+            <div class="sobre-grid">
+                <div class="sobre-texto reveal">
+                    <h2>Quem Somos</h2>
+                    <p>O Clube de Observadores de Aves de São Carlos (COASANCA) é uma iniciativa local, sem fins lucrativos, fundada em 2026, que reúne observadores de aves, fotógrafos de natureza e pessoas interessadas na biodiversidade do município de São Carlos – SP.</p>
+                    <p>O clube promove a observação consciente de aves, a educação ambiental e a valorização da avifauna local por meio de atividades colaborativas, monitoramento de espécies e divulgação científica acessível a toda a comunidade.</p>
+                </div>
+                <div class="sobre-img reveal">
+                    <!-- Placeholder de observadores de aves -->
+                    <img src="https://images.unsplash.com/photo-1596711537237-77989938bbb2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Observadores de aves em campo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- O QUE FAZEMOS -->
+    <section id="atividades">
+        <div class="container">
+            <h2 class="section-title reveal">O Que Fazemos</h2>
+            <div class="cards-grid">
+                <div class="card reveal">
+                    <span class="card-icon">🔭</span>
+                    <h3>Saídas mensais de observação</h3>
+                </div>
+                <div class="card reveal">
+                    <span class="card-icon">📸</span>
+                    <h3>Encontros de fotografia de aves</h3>
+                </div>
+                <div class="card reveal">
+                    <span class="card-icon">📝</span>
+                    <h3>Registro da avifauna local</h3>
+                </div>
+                <div class="card reveal">
+                    <span class="card-icon">🌱</span>
+                    <h3>Ações de educação ambiental</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POR QUE PARTICIPAR -->
+    <section id="participar">
+        <div class="container participar-container">
+            <h2 class="section-title reveal">Por que participar?</h2>
+            <ul class="lista-beneficios reveal">
+                <li>Fazer parte de um clube local ativo</li>
+                <li>Aprender mais sobre aves e natureza</li>
+                <li>Participar de saídas guiadas e encontros</li>
+                <li>Contribuir diretamente com a conservação ambiental</li>
+            </ul>
+            <a href="#contato" class="btn btn-primary reveal">Como participar</a>
+        </div>
+    </section>
+
+    <!-- CONTRIBUIÇÃO ANUAL -->
+    <section id="contribuicao">
+        <div class="container">
+            <div class="box-contribuicao reveal">
+                <h2>Contribuição anual</h2>
+                <div class="preco">R$ 100,00 <span>por ano</span></div>
+                <p>A contribuição anual dos membros do COASANCA é destinada exclusivamente ao custeio das atividades do clube, como organização das saídas de campo, produção de materiais educativos e manutenção das ações de educação ambiental.</p>
+                <p style="font-size: 0.9rem; margin-top: 1rem;"><strong>O COASANCA não possui fins lucrativos.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section id="galeria">
+        <div class="container">
+            <h2 class="section-title reveal">Registros do COASANCA</h2>
+            <div class="galeria-grid">
+                <div class="galeria-item reveal"><img src="https://images.unsplash.com/photo-1550853024-84c99944b771?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ave colorida"></div>
+                <div class="galeria-item reveal"><img src="https://images.unsplash.com/photo-1452570053594-1b985d6ea890?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ave voando"></div>
+                <div class="galeria-item reveal"><img src="https://images.unsplash.com/photo-1444464666168-49d633b86797?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ave na floresta"></div>
+                <div class="galeria-item reveal"><img src="https://images.unsplash.com/photo-1516233758813-a381c67b149e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ave pequena"></div>
+                <div class="galeria-item reveal"><img src="https://images.unsplash.com/photo-1606567595334-d39972c85dbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ave brasileira"></div>
+                <div class="galeria-item reveal"><img src="https://images.unsplash.com/photo-1549608276-5786777e6587?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ave exótica"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHAMADA FINAL -->
+    <section id="cta-final">
+        <div class="container reveal">
+            <h2>Venha observar aves com a gente</h2>
+            <p>Faça parte do Clube de Observadores de Aves de São Carlos e participe das nossas atividades.</p>
+            <a href="#contato" class="btn btn-primary" style="background-color: var(--cor-verde-claro); border-color: var(--cor-verde-claro);">Quero me associar</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contato">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>COASANCA</h4>
+                    <p>Clube de Observadores de Aves de São Carlos</p>
+                    <p style="margin-top: 15px; color: #aaa;">Fundado em 2026</p>
+                    <p style="color: var(--cor-verde-claro); font-weight: 600;">Conservando a biodiversidade local.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Menu</h4>
+                    <ul>
+                        <li><a href="#sobre">O Clube</a></li>
+                        <li><a href="#atividades">Atividades</a></li>
+                        <li><a href="#participar">Como Participar</a></li>
+                        <li><a href="#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><a href="#">📷 Instagram</a></li>
+                        <li><a href="#">💬 WhatsApp</a></li>
+                        <li><a href="#">✉️ coasanca@email.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 – COASANCA – São Carlos – SP. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+        // Menu Mobile Toggle
+        const burger = document.querySelector('.burger');
+        const nav = document.querySelector('.nav-links');
+        const navLinks = document.querySelectorAll('.nav-links li');
+
+        burger.addEventListener('click', () => {
+            // Toggle Nav
+            nav.classList.toggle('nav-active');
+            
+            // Animação do Burger
+            burger.classList.toggle('toggle');
+
+            // Animate Links
+            navLinks.forEach((link, index) => {
+                if (link.style.animation) {
+                    link.style.animation = '';
+                } else {
+                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                }
+            });
+        });
+
+        // Fechar menu ao clicar em um link (Mobile UX)
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (nav.classList.contains('nav-active')) {
+                    nav.classList.remove('nav-active');
+                    burger.classList.remove('toggle');
+                    navLinks.forEach(link => link.style.animation = '');
+                }
+            });
+        });
+
+        // Animação de Scroll (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.1, // Dispara quando 10% do elemento está visível
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+</html>
